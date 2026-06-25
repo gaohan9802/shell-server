@@ -1,1 +1,4 @@
 mcp
+uvicorn
+starlette
+sse-starlette
