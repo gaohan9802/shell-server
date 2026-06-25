@@ -25,5 +25,4 @@ def run(command: str) -> str:
         return f"(error: {e})"
 
 if __name__ == "__main__":
-    mcp.run(transport="sse", port=8005)
-
+    mcp.run(transport="http", host="0.0.0.0", port=8005)
