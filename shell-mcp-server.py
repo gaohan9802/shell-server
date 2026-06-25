@@ -1,3 +1,6 @@
+mkdir -p /root/shell-server
+
+cat > /root/shell-server/shell-mcp-server.py << 'EOF'
 #!/usr/bin/env python3
 from mcp.server.fastmcp import FastMCP
 import subprocess
@@ -26,3 +29,4 @@ def run(command: str) -> str:
 
 if __name__ == "__main__":
     mcp.run(transport="sse", host="0.0.0.0", port=8005)
+EOF
