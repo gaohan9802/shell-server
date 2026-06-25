@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-from fastmcp import FastMCP
 import subprocess
+from fastmcp import FastMCP
 
 mcp = FastMCP("shell")
 
@@ -23,3 +23,6 @@ def run(command: str) -> str:
         return "(timeout after 30s)"
     except Exception as e:
         return f"(error: {e})"
+
+if __name__ == "__main__":
+    mcp.run()
