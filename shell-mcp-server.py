@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import os
 from mcp.server.fastmcp import FastMCP
 import subprocess
 
@@ -26,5 +25,4 @@ def run(command: str) -> str:
         return f"(error: {e})"
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", "8005"))
-    mcp.run(transport="sse", host="0.0.0.0", port=port)
+    mcp.run(transport="sse", host="0.0.0.0", port=8005)
