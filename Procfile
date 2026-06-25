@@ -1,1 +1,1 @@
-web: python3 shell-mcp-server.py
+web: python /app/shell-server.py
