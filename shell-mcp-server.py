@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
+import os
 import subprocess
 from fastmcp import FastMCP
+from starlette.requests import Request
+from starlette.responses import JSONResponse
 
 mcp = FastMCP("shell")
 
@@ -24,5 +27,10 @@ def run(command: str) -> str:
     except Exception as e:
         return f"(error: {e})"
 
+@mcp.custom_route("/health", methods=["GET"])
+async def health_check(request: Request) -> JSONResponse:
+    return JSONResponse({"status": "alive"}, status_code=200)
+
 if __name__ == "__main__":
-    mcp.run()
+    port = int(os.getenv("PORT", "8005"))
+    mcp.run(transport="sse", host="0.0.0.0", port=port)
