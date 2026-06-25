@@ -24,5 +24,9 @@ def run(command: str) -> str:
     except Exception as e:
         return f"(error: {e})"
 
+# Create ASGI app for production deployment
+app = mcp.http_app()
+
 if __name__ == "__main__":
-    mcp.run(transport="http", port=8005)
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8005)
