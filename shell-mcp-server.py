@@ -1,15 +1,33 @@
 #!/usr/bin/env python3
 import os
 import subprocess
+import json
+from datetime import datetime, timezone, timedelta
 from fastmcp import FastMCP
-from starlette.requests import Request
-from starlette.responses import JSONResponse
 
 mcp = FastMCP("shell")
+
+HEARTBEAT_STATE = "/app/heartbeat_state.json"
+TZ = timezone(timedelta(hours=2))
+
+
+def mark_active():
+    try:
+        state = {}
+        if os.path.exists(HEARTBEAT_STATE):
+            with open(HEARTBEAT_STATE, "r") as f:
+                state = json.load(f)
+        state["last_user_message"] = datetime.now(TZ).isoformat()
+        with open(HEARTBEAT_STATE, "w") as f:
+            json.dump(state, f, ensure_ascii=False, indent=2)
+    except:
+        pass
+
 
 @mcp.tool()
 def run(command: str) -> str:
     """Execute a shell command and return output."""
+    mark_active()
     try:
         result = subprocess.run(
             command, shell=True, capture_output=True, text=True, timeout=30
@@ -27,9 +45,6 @@ def run(command: str) -> str:
     except Exception as e:
         return f"(error: {e})"
 
-@mcp.custom_route("/health", methods=["GET"])
-async def health_check(request: Request) -> JSONResponse:
-    return JSONResponse({"status": "alive"}, status_code=200)
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", "8005"))
