@@ -1,3 +1,4 @@
-fastmcp==2.2.6
-uvicorn
-starlette
+fastmcp==2.7.0
+uvicorn==0.34.3
+starlette==0.46.2
+sse-starlette==2.3.6
