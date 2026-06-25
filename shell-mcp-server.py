@@ -7,7 +7,7 @@ from fastmcp import FastMCP
 
 mcp = FastMCP("shell")
 
-HEARTBEAT_STATE = "/app/heartbeat_state.json"
+HEARTBEAT_STATE = "/data/heartbeat_state.json"
 TZ = timezone(timedelta(hours=2))
 
 
